@@ -26,8 +26,10 @@ namespace PracticaPersonalSGEE.Controllers
                 var createUser = await _userService.RegisterUser(userDTO);
 
                 return Ok(createUser);
-            }catch(InvalidOperationException ex)
+
+            }catch(ArgumentException ex)
             {
+               
                 return BadRequest(new {message = ex.Message});
             }
             catch (Exception ex) 

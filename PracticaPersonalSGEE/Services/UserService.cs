@@ -1,6 +1,7 @@
 ﻿using PracticaPersonalSGEE.DTOs;
 using PracticaPersonalSGEE.Models;
 using PracticaPersonalSGEE.Repositories;
+using System.Text.RegularExpressions;
 
 namespace PracticaPersonalSGEE.Services
 {
@@ -17,14 +18,23 @@ namespace PracticaPersonalSGEE.Services
 
         public async Task<Users> RegisterUser(UserDTO userDTO)
         {
+            var validRoles = new List<string> { "Admin", "Teacher", "Student" };
+
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
             if (await _userRepository.EmailExists(userDTO.Email))
             {
-                throw new InvalidOperationException("El correo ya esta registrado");
+                throw new ArgumentException("El correo ya esta registrado");
             }
 
-            if (userDTO.Role == "Admin" || userDTO.Role == "Teacher" || userDTO.Role == "Student")
+            if (!Regex.IsMatch(userDTO.Email, emailPattern))
             {
-                throw new InvalidOperationException("Ese Rol no existe");
+                throw new ArgumentException("Tiene que ser un correo valido");
+            }
+
+            if (!validRoles.Contains(userDTO.Role))
+            {
+                throw new ArgumentException("Ese Rol no existe");
             }
 
             return await _userRepository.UserRegister(userDTO);
