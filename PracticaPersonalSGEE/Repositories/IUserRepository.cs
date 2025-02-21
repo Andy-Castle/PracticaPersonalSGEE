@@ -8,5 +8,7 @@ namespace PracticaPersonalSGEE.Repositories
         Task<Users> UserLogin(UserDTO userDTO);
 
         Task<Users> UserRegister(UserDTO userDTO);
+
+        Task<bool> EmailExists(string email);
     }
 }

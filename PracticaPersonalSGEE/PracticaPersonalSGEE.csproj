@@ -14,10 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Middlewares\" />
     <Folder Include="Configs\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
